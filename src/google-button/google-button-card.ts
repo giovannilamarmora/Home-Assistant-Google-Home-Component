@@ -134,7 +134,12 @@ export class GoogleButtonCard extends LitElement {
     this._cancelPress(); // elimina timer precedente se presente
     this._moved = false;
 
-    if (event instanceof TouchEvent && event.touches.length > 0) {
+    if (
+      // as of 2025, TouchEvent constructor is not available in Firefox and Safari
+      typeof TouchEvent !== 'undefined' &&
+      event instanceof TouchEvent &&
+      event.touches.length > 0
+    ) {
       this._startX = event.touches[0].clientX;
       this._startY = event.touches[0].clientY;
     } else if (event instanceof MouseEvent) {
